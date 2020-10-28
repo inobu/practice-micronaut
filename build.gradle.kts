@@ -37,6 +37,7 @@ dependencies {
     val micronautVersion: String by project
     implementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
     implementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut:micronaut-http-server-netty")
 
     kapt("io.micronaut:micronaut-validation")
 
@@ -44,12 +45,14 @@ dependencies {
     kaptTest(platform("io.micronaut:micronaut-bom:$micronautVersion"))
     testImplementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
 
+    runtimeOnly("ch.qos.logback:logback-classic:1.2.3")
+
     implementation("javax.annotation:javax.annotation-api")
 
 
     // apply Kotlin Runtime Support
-    implementation("io.micronaut.kotlin:micronaut-kotlin-runtime:1.0.0.M2")
-    implementation("io.micronaut.kotlin:micronaut-ktor:1.0.0.M2")
+    implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
+//    implementation("io.micronaut.kotlin:micronaut-ktor")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("io.micronaut.test:micronaut-test-junit5")
