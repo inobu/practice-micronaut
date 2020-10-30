@@ -12,7 +12,7 @@ plugins {
 
 version = "0.1"
 group = "org.practice.micronaut.bookshelf"
-java.sourceCompatibility = JavaVersion.VERSION_1_8
+java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
     mavenCentral()
@@ -71,16 +71,15 @@ allOpen {
 }
 
 
-tasks {
-    withType<KotlinCompile> {
-        kotlinOptions {
-            freeCompilerArgs = listOf("-Xjsr305=strict")
-            jvmTarget = "1.8"
-            javaParameters = true
-        }
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xjsr305=strict")
+        jvmTarget = "11"
+        javaParameters = true
     }
 }
 
