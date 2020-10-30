@@ -57,6 +57,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("io.micronaut.test:micronaut-test-junit5")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    kaptTest("io.micronaut:micronaut-inject-java")
 }
 
 application {
@@ -77,6 +78,9 @@ tasks {
             jvmTarget = "1.8"
             javaParameters = true
         }
+tasks.withType<Test> {
+    useJUnitPlatform()
+}
     }
 }
 
