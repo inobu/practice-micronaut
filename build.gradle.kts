@@ -69,9 +69,6 @@ allOpen {
     annotation("io.micronaut.aop.Around")
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
-}
 
 tasks {
     withType<KotlinCompile> {
