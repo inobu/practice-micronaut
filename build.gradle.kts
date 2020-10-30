@@ -54,6 +54,19 @@ dependencies {
     implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
 //    implementation("io.micronaut.kotlin:micronaut-ktor")
 
+    val arrowVersion: String by project
+    implementation("io.arrow-kt:arrow-core:${arrowVersion}")
+    implementation("io.arrow-kt:arrow-core-data:${arrowVersion}")
+    implementation("io.arrow-kt:arrow-mtl-data:${arrowVersion}")
+    implementation("io.arrow-kt:arrow-mtl:${arrowVersion}")
+    implementation("io.arrow-kt:arrow-optics-mtl:${arrowVersion}")
+    implementation("io.arrow-kt:arrow-recursion-data:${arrowVersion}")
+    implementation("io.arrow-kt:arrow-recursion:${arrowVersion}")
+    implementation("io.arrow-kt:arrow-free-data:${arrowVersion}")
+    implementation("io.arrow-kt:arrow-free:${arrowVersion}")
+    implementation("io.arrow-kt:arrow-annotations:${arrowVersion}")
+    implementation("io.arrow-kt:arrow-syntax:${arrowVersion}")
+
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("io.micronaut.test:micronaut-test-junit5")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
