@@ -19,7 +19,7 @@ repositories {
     maven("https://jcenter.bintray.com")
 }
 
-val developmentOnly by configurations.creating
+val developmentOnly: Configuration by configurations.creating
 configurations {
     runtimeClasspath {
         extendsFrom(developmentOnly)
