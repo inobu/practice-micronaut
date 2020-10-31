@@ -1,16 +1,18 @@
 package org.practice.micronaut.bookshelf.domain.type
 
-import java.time.LocalDate
-
 import arrow.core.Option
 import arrow.core.Some
+import java.time.LocalDate
 
-data class PublicationDate private constructor(val value: LocalDate) {
-    companion object  {
-        operator fun invoke(value: LocalDate): Option<PublicationDate> {
-            return Some(value).map { PublicationDate(it) }
+data class PublicationDate private constructor(override val value: LocalDate) : Value<LocalDate> {
+    companion object {
+        operator fun invoke(value: LocalDate, currentDate: LocalDate): Option<PublicationDate> {
+            return Some(value).filter { validPublicationDate(it, currentDate) }.map { PublicationDate(it) }
         }
 
         //エラーハンドルそのうち追加する
+        private fun validPublicationDate(value: LocalDate, currentDate: LocalDate): Boolean {
+            return value.isBefore(currentDate)
+        }
     }
 }
