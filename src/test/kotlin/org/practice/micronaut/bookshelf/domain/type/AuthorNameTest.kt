@@ -9,7 +9,7 @@ class AuthorNameTest {
     companion object {
         private const val invalidLength = 101
         private val invalidValue by lazy {
-            (1..invalidLength).map { "a" }.fold("", { first, second -> first + second })
+            (1..invalidLength).map { "a" }.reduce { first, second -> first + second }
         }
     }
 
