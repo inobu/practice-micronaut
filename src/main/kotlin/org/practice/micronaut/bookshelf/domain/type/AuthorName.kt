@@ -1,17 +1,19 @@
 package org.practice.micronaut.bookshelf.domain.type
 
-data class AuthorName(val authorName: String) {
-    companion object {
-        /**
-         * 現状不明
-         */
-        private const val maxAuthorNameLength = 10
-    }
+import arrow.core.Option
+import arrow.core.Some
 
-    init {
-        if (authorName.length > maxAuthorNameLength) {
-            throw IllegalArgumentException()
+data class AuthorName private constructor(override val value: String) : Value<String>{
+    companion object  {
+        private const val maxLength = 100
+        private const val minLength = 1
+
+        operator fun invoke(value: String): Option<AuthorName> {
+            return Some(value).filter { validAuthorName(it) }.map { AuthorName(it) }
+        }
+
+        private fun validAuthorName(value: String): Boolean {
+            return value.length in (minLength + 1) until maxLength
         }
     }
-
 }

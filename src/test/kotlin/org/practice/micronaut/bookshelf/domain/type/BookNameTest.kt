@@ -1,13 +1,32 @@
 package org.practice.micronaut.bookshelf.domain.type
 
+import arrow.core.None
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 
+@MicronautTest
 class BookNameTest {
-    @Test
-    fun bookNameTest() {
-        assertThrows<IllegalArgumentException> {
-            BookName("12345678901")
+    companion object {
+        private const val invalidLength = 101
+        private val invalidValue by lazy {
+            (1..invalidLength).map { "a" }.fold("", { first, second -> first + second })
         }
+    }
+
+
+    @Test
+    fun bookNameInvalidMaxLengthTest() {
+        assert(BookName(invalidValue) == None)
+    }
+
+    @Test
+    fun bookNameInvalidMinLengthTest() {
+        assert(BookName("") == None)
+    }
+
+    @Test
+    fun bookNameValidTest() {
+        val validValue = "Clean Architecture　達人に学ぶソフトウェアの構造と設計"
+        assert(BookName(validValue).nonEmpty())
     }
 }
