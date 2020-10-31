@@ -3,20 +3,15 @@ package org.practice.micronaut.bookshelf.domain.type
 import arrow.core.None
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import org.junit.jupiter.api.Test
+import org.practice.micronaut.bookshelf.domain.TestDataFactory.invalidLengthName
+import org.practice.micronaut.bookshelf.domain.TestDataFactory.validAuthorName
 
 @MicronautTest
 class AuthorNameTest {
-    companion object {
-        private const val invalidLength = 101
-        private val invalidValue by lazy {
-            (1..invalidLength).map { "a" }.reduce { first, second -> first + second }
-        }
-    }
-
 
     @Test
     fun authorNameInvalidMaxLengthTest() {
-        assert(AuthorName(invalidValue) == None)
+        assert(AuthorName(invalidLengthName) == None)
     }
 
     @Test
@@ -26,8 +21,7 @@ class AuthorNameTest {
 
     @Test
     fun authorNameValidTest() {
-        val validValue = "ロバート・C・マーティン"
-        assert(AuthorName(validValue).nonEmpty())
+        assert(AuthorName(validAuthorName).nonEmpty())
     }
 
 }

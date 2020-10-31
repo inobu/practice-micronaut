@@ -9,13 +9,18 @@ import org.practice.micronaut.bookshelf.domain.type.BookName
 import org.practice.micronaut.bookshelf.domain.type.PublicationDate
 import java.time.LocalDate
 
-data class Book private constructor(val bookName: BookName, val publicationDate: PublicationDate) : Entity {
+/**
+ * まだ出版されていない本
+ * BookName未確定
+ */
+data class PrePublishedBook private constructor(
+        val bookName: Option<BookName>, val publicationDate: PublicationDate) : Entity {
     companion object {
-        operator fun invoke(rawBookName: String, rawPublicationDate: LocalDate, currentDate: LocalDate): Either<DomainErr, Book> {
+        operator fun invoke(rawBookName: String, rawPublicationDate: LocalDate, currentDate: LocalDate): Either<DomainErr, PrePublishedBook> {
             return Option.fx {
-                val bookName = BookName(rawBookName).bind()
+                val bookName = BookName(rawBookName)
                 val publicationDate = PublicationDate(rawPublicationDate, currentDate).bind()
-                Book(bookName, publicationDate)
+                PrePublishedBook(bookName, publicationDate)
             }.fix().toEither {
                 DomainErr.ValidationErr
             }

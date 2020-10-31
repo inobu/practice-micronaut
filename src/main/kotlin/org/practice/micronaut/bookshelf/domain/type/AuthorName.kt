@@ -3,8 +3,8 @@ package org.practice.micronaut.bookshelf.domain.type
 import arrow.core.Option
 import arrow.core.Some
 
-data class AuthorName private constructor(override val value: String) : Value<String>{
-    companion object  {
+data class AuthorName private constructor(override val value: String) : Value<String> {
+    companion object {
         private const val maxLength = 100
         private const val minLength = 1
 
