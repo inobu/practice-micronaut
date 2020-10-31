@@ -15,12 +15,12 @@ class PublicationDateTest {
 
 
     @Test
-    fun bookNameInvalidMaxLengthTest() {
+    fun invalidPublicationDateTest() {
         assert(PublicationDate(afterDate, currentDate) == None)
     }
 
     @Test
-    fun bookNameInvalidMinLengthTest() {
+    fun validPublicationDateTest() {
         assert(PublicationDate(beforeDate, currentDate).nonEmpty())
     }
 }
