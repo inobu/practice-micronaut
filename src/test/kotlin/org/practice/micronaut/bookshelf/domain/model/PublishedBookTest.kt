@@ -6,6 +6,7 @@ import org.practice.micronaut.bookshelf.domain.TestDataFactory.beforeDate
 import org.practice.micronaut.bookshelf.domain.TestDataFactory.currentDate
 import org.practice.micronaut.bookshelf.domain.TestDataFactory.invalidLengthName
 import org.practice.micronaut.bookshelf.domain.TestDataFactory.validBookName
+import org.practice.micronaut.bookshelf.domain.model.book.PublishedBook
 
 @MicronautTest
 class PublishedBookTest {

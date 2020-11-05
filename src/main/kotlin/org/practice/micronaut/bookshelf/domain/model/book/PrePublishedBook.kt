@@ -1,10 +1,11 @@
-package org.practice.micronaut.bookshelf.domain.model
+package org.practice.micronaut.bookshelf.domain.model.book
 
 import arrow.core.Either
 import arrow.core.Option
 import arrow.core.extensions.fx
 import arrow.core.fix
 import org.practice.micronaut.bookshelf.domain.lib.DomainErr
+import org.practice.micronaut.bookshelf.domain.model.Entity
 import org.practice.micronaut.bookshelf.domain.type.BookName
 import org.practice.micronaut.bookshelf.domain.type.PublicationDate
 import java.time.LocalDate

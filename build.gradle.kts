@@ -7,7 +7,7 @@ plugins {
     kotlin("plugin.allopen") version "1.4.10"
     id("com.github.johnrengelman.shadow") version "6.0.0"
     id("org.jlleitschuh.gradle.ktlint") version "8.0.0"
-    id("application")
+    id("io.micronaut.application") version "1.0.3"
 }
 
 version = "0.1"
@@ -19,15 +19,6 @@ repositories {
     maven("https://jcenter.bintray.com")
 }
 
-val developmentOnly: Configuration by configurations.creating
-configurations {
-    runtimeClasspath {
-        extendsFrom(developmentOnly)
-    }
-    testRuntimeClasspath {
-        extendsFrom(developmentOnly)
-    }
-}
 
 dependencies {
     val kotlinVersion: String by project
@@ -38,8 +29,12 @@ dependencies {
     implementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
     implementation("io.micronaut:micronaut-http-client")
     implementation("io.micronaut:micronaut-http-server-netty")
+    implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
+    implementation("io.micronaut:micronaut-runtime")
+    implementation("io.micronaut.sql:micronaut-jooq")
+    runtimeOnly("io.micronaut.sql:micronaut-jdbc-hikari")
 
-    kapt("io.micronaut:micronaut-validation")
+//    kapt("io.micronaut:micronaut-validation")
 
     kapt(platform("io.micronaut:micronaut-bom:$micronautVersion"))
     kaptTest(platform("io.micronaut:micronaut-bom:$micronautVersion"))
@@ -49,10 +44,8 @@ dependencies {
 
     implementation("javax.annotation:javax.annotation-api")
 
-
     // apply Kotlin Runtime Support
     implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
-//    implementation("io.micronaut.kotlin:micronaut-ktor")
 
     val arrowVersion: String by project
     implementation("io.arrow-kt:arrow-core:${arrowVersion}")
@@ -74,7 +67,7 @@ dependencies {
 }
 
 application {
-    mainClassName = "org.practice.micronaut.bookshelf.ApplicationKt"
+    mainClass.set("org.practice.micronaut.bookshelf.ApplicationKt")
     applicationDefaultJvmArgs = listOf("-noverify", "-XX:TieredStopAtLevel=1", "-Dcom.sun.management.jmxremote")
 }
 
