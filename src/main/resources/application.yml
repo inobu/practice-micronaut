@@ -1,3 +1,10 @@
 micronaut:
   application:
     name: practiceMicronaut
+datasources:
+  default:
+    url: jdbc:mysql://localhost:33006/micronaut?useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: secret
+    driverClassName: com.mysql.cj.jdbc.Driver
+    sql-dialect: 'MYSQL'

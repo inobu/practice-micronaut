@@ -6,7 +6,7 @@ plugins {
     kotlin("kapt") version "1.4.10"
     kotlin("plugin.allopen") version "1.4.10"
     id("com.github.johnrengelman.shadow") version "6.0.0"
-    id("org.jlleitschuh.gradle.ktlint") version "8.0.0"
+//    id("org.jlleitschuh.gradle.ktlint") version "8.0.0"
     id("io.micronaut.application") version "1.0.3"
 }
 
@@ -22,8 +22,9 @@ repositories {
 
 dependencies {
     val kotlinVersion: String by project
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
     implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
+    implementation(project("db"))
 
     val micronautVersion: String by project
     implementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
@@ -31,10 +32,12 @@ dependencies {
     implementation("io.micronaut:micronaut-http-server-netty")
     implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
     implementation("io.micronaut:micronaut-runtime")
-    implementation("io.micronaut.sql:micronaut-jooq")
+    implementation("io.micronaut.sql:micronaut-jooq:3.1.1")
+    implementation("io.micronaut:micronaut-inject:${micronautVersion}")
+    implementation("mysql:mysql-connector-java:8.0.22")
     runtimeOnly("io.micronaut.sql:micronaut-jdbc-hikari")
 
-//    kapt("io.micronaut:micronaut-validation")
+    kapt("io.micronaut:micronaut-inject-java:${micronautVersion}")
 
     kapt(platform("io.micronaut:micronaut-bom:$micronautVersion"))
     kaptTest(platform("io.micronaut:micronaut-bom:$micronautVersion"))
@@ -60,10 +63,12 @@ dependencies {
     implementation("io.arrow-kt:arrow-annotations:${arrowVersion}")
     implementation("io.arrow-kt:arrow-syntax:${arrowVersion}")
 
+    kaptTest("io.micronaut:micronaut-inject-java:${micronautVersion}")
     testImplementation("org.junit.jupiter:junit-jupiter-api")
-    testImplementation("io.micronaut.test:micronaut-test-junit5")
+    testImplementation("io.micronaut.test:micronaut-test-junit5:2.2.1")
+    testImplementation("com.ninja-squad:DbSetup:2.1.0")
+    testImplementation("com.ninja-squad:DbSetup-kotlin:2.1.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-    kaptTest("io.micronaut:micronaut-inject-java")
 }
 
 application {

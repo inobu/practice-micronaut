@@ -1,4 +1,5 @@
 package org.practice.micronaut.bookshelf.presentation
 
-data class BookResponse(val book: String) {
-}
+import java.time.LocalDate
+
+data class BookResponse(val id: String, val bookName: String, val publicationDate: LocalDate)

@@ -8,6 +8,7 @@ import org.practice.micronaut.bookshelf.domain.TestDataFactory.currentDate
 import org.practice.micronaut.bookshelf.domain.TestDataFactory.invalidLengthName
 import org.practice.micronaut.bookshelf.domain.TestDataFactory.validBookName
 import org.practice.micronaut.bookshelf.domain.model.book.PrePublishedBook
+import java.util.*
 
 @MicronautTest
 class PrePublishedBookTest {
@@ -27,6 +28,10 @@ class PrePublishedBookTest {
 
     @Test
     fun invalidPrePublishedBookTest() {
-        assert(PrePublishedBook(validBookName, afterDate, currentDate).isLeft())
+        val rand = UUID.randomUUID()
+        val pre = "b0c4a631-469f-462e-a41f-d6a30ee6b03f"
+        println(rand)
+        println(UUID.fromString(pre))
+        assert(PrePublishedBook(validBookName, afterDate, currentDate).isRight())
     }
 }

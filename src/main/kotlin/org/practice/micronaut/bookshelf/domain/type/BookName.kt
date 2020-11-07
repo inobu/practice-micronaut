@@ -7,8 +7,8 @@ data class BookName private constructor(override val value: String) : Value<Stri
         private const val minLength = 1
         private const val maxLength = 100
 
-        operator fun invoke(value: String): Option<BookName> {
-            return Some(value).filter { validBookName(it) }.map { BookName(it) }
+        operator fun invoke(value: String?): Option<BookName> {
+            return value.toOption().filter { validBookName(it) }.map { BookName(it) }
         }
 
         private fun validBookName(value: String): Boolean {
