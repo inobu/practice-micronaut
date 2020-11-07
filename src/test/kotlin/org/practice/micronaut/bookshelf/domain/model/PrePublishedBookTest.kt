@@ -28,10 +28,6 @@ class PrePublishedBookTest {
 
     @Test
     fun invalidPrePublishedBookTest() {
-        val rand = UUID.randomUUID()
-        val pre = "b0c4a631-469f-462e-a41f-d6a30ee6b03f"
-        println(rand)
-        println(UUID.fromString(pre))
-        assert(PrePublishedBook(validBookName, afterDate, currentDate).isRight())
+        assert(PrePublishedBook(validBookName, afterDate, currentDate).isLeft())
     }
 }
