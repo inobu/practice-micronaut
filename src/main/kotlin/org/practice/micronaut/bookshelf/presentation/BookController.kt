@@ -29,7 +29,7 @@ constructor(private val bookQueryService: BookQueryService) {
                             HttpResponse.notFound<String>().body(it)
                         },
                         {
-                            HttpResponse.ok(BookResponse(it.id, it.bookName.value, it.publicationDate.value, "著者名"))
+                            HttpResponse.ok(BookResponse(it.id, it.bookName.value, it.publicationDate.value, it.bookName.value))
                         })
     }
 }
