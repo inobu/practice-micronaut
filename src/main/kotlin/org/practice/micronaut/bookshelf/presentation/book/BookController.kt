@@ -1,10 +1,11 @@
-package org.practice.micronaut.bookshelf.presentation
+package org.practice.micronaut.bookshelf.presentation.book
 
 import arrow.core.flatMap
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.*
 import org.practice.micronaut.bookshelf.application.BookQueryService
+import org.practice.micronaut.bookshelf.presentation.uuidValidator
 import org.practice.micronaut.bookshelf.util.tap
 import org.slf4j.LoggerFactory
 import javax.inject.Inject

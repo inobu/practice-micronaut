@@ -16,6 +16,7 @@ import java.time.LocalDate
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
+
 @Singleton
 class BookQueryServiceImpl
 @Inject constructor(private val dSLContext: DSLContext) : BookQueryService {

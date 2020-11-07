@@ -1,4 +1,4 @@
-package org.practice.micronaut.bookshelf.presentation
+package org.practice.micronaut.bookshelf.presentation.book
 
 import java.time.LocalDate
 
