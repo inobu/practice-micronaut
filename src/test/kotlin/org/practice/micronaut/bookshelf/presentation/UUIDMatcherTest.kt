@@ -9,18 +9,18 @@ class UUIDMatcherTest {
 
     @Test
     fun validUUIDTest() {
-        assert(UUID.randomUUID().toString().uuidMatcher().isRight())
+        assert(UUID.randomUUID().toString().uuidValidator().isRight())
     }
 
     @Test
     fun invalidUUIDTestBecauseNull() {
         val nullString : String? = null
-        assert(nullString.uuidMatcher().isLeft())
+        assert(nullString.uuidValidator().isLeft())
     }
 
     @Test
     fun invalidUUIDTestBecauseNotMatch() {
         val invalidString = "適当"
-        assert(invalidString.uuidMatcher().isLeft())
+        assert(invalidString.uuidValidator().isLeft())
     }
 }
