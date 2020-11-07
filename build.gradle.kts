@@ -38,6 +38,7 @@ dependencies {
     runtimeOnly("io.micronaut.sql:micronaut-jdbc-hikari")
 
     kapt("io.micronaut:micronaut-inject-java:${micronautVersion}")
+    compileOnly("javax.inject:javax.inject:1")
 
     kapt(platform("io.micronaut:micronaut-bom:$micronautVersion"))
     kaptTest(platform("io.micronaut:micronaut-bom:$micronautVersion"))

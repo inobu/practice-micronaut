@@ -13,11 +13,9 @@ import org.practice.micronaut.bookshelf.domain.type.PublicationDate
 import java.time.LocalDate
 import java.util.*
 import javax.inject.Inject
-import javax.inject.Named
 import javax.inject.Singleton
 
 @Singleton
-@Named("query")
 class BookQueryServiceImpl
 @Inject constructor(private val dSLContext: DSLContext) : BookQueryService {
     override fun findBook(id: UUID): Option<BookDTO> {
