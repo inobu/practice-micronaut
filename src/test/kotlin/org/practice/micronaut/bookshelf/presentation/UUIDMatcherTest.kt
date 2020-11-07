@@ -9,7 +9,6 @@ class UUIDMatcherTest {
 
     @Test
     fun validUUIDTest() {
-        println(UUID.randomUUID().toString())
         assert(UUID.randomUUID().toString().uuidMatcher().isRight())
     }
 
