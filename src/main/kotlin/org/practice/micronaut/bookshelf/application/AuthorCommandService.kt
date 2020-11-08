@@ -13,7 +13,7 @@ import javax.inject.Singleton
 class AuthorCommandService(private val authorRepository: AuthorRepository) {
     private val logger = LoggerFactory.getLogger(AuthorCommandService::class.java)
 
-    fun command(authorName: String?): Either<GlobalError, Int> {
+    fun command(authorName: String?): Either<GlobalError, Unit> {
         return Author(authorName)
                 .tap(leftSideEffect = { logger.info("invalid authorName") })
                 .flatMap { authorRepository.saveAuthor(it) }

@@ -14,18 +14,18 @@ import javax.inject.Singleton
 
 @Singleton
 class AuthorRepositoryImpl @Inject constructor(private val dslContext: DSLContext) : AuthorRepository {
-    override fun saveAuthor(author: Author): Either<GlobalError.DatabaseConflictsError, Int> {
+    override fun saveAuthor(author: Author): Either<GlobalError.DatabaseConflictsError, Unit> {
         return dslContext.insertInto(Authors.AUTHORS)
                 .columns(Authors.AUTHORS.ID, Authors.AUTHORS.AUTHOR_NAME)
                 .values(author.id.value.uuidToBytes(), author.authorName.value)
-                .onConflict(Authors.AUTHORS.AUTHOR_NAME)
-                .doNothing()
-                .returning().run {
-                    return if (isExecutable) {
-                        execute().right()
-                    } else {
-                        GlobalError.DatabaseConflictsError.left()
-                    }
-                }
+                .runCatching { execute() }
+                .fold(
+                        onSuccess = {
+                            {}().right()
+                        },
+                        onFailure = {
+                            GlobalError.DatabaseConflictsError.left()
+                        }
+                )
     }
 }
