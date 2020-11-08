@@ -26,8 +26,8 @@ class AuthorQueryServiceImpl @Inject constructor(private val dslContext: DSLCont
                     val author = this
                     Option.fx {
                         AuthorDTO(
-                                bytesToUuid(author.id).toString(),
-                                AuthorName(author.authorName).bind()
+                                bytesToUuid(author?.id).toString(),
+                                AuthorName(author?.authorName).bind()
                         )
                     }.fix()
                 }
