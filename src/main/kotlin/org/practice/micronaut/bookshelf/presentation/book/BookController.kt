@@ -31,6 +31,7 @@ constructor(private val bookQueryService: BookQueryService) {
                         {
                             when (it) {
                                 is GlobalError.DomainError, GlobalError.PresentationInvalidUUIDError -> HttpResponse.badRequest(ResponseBodyJson.fromHttpStatus(HttpStatus.BAD_REQUEST))
+                                is GlobalError.NotFoundError -> HttpResponse.notFound(ResponseBodyJson.fromHttpStatus(HttpStatus.BAD_REQUEST))
                                 is GlobalError.DatabaseConflictsError -> HttpResponse.status<ResponseBodyJson>(HttpStatus.CONFLICT).body(ResponseBodyJson.fromHttpStatus(HttpStatus.CONFLICT))
                                 else -> HttpResponse.serverError()
                             }
