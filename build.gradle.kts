@@ -24,7 +24,7 @@ dependencies {
     val kotlinVersion: String by project
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
     implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
-    implementation(project("db"))
+    implementation(project("gen-db"))
 
     val micronautVersion: String by project
     implementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))

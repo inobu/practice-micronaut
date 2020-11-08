@@ -1,2 +1,2 @@
 rootProject.name = "practice-micronaut"
-include("db")
+include("gen-db")
