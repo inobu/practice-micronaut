@@ -5,21 +5,21 @@ import arrow.core.Option
 import arrow.core.extensions.fx
 import arrow.core.fix
 import org.jetbrains.annotations.TestOnly
-import org.practice.micronaut.bookshelf.domain.lib.DomainErr
 import org.practice.micronaut.bookshelf.domain.model.Entity
 import org.practice.micronaut.bookshelf.domain.model.Id
 import org.practice.micronaut.bookshelf.domain.type.AuthorName
+import org.practice.micronaut.bookshelf.util.GlobalError
 import java.util.*
 
 data class Author private constructor(override val id: Id<Author>, val authorName: AuthorName) : Entity<Author> {
     companion object {
-        operator fun invoke(rawName: String): Either<DomainErr, Author> {
+        operator fun invoke(rawName: String?): Either<GlobalError, Author> {
             return Option.fx {
                 val id = Id<Author>(UUID.randomUUID())
                 val authorName = AuthorName(rawName).bind()
                 Author(id, authorName)
             }.fix().toEither {
-                DomainErr.ValidationErr
+                GlobalError.DomainError
             }
         }
     }
