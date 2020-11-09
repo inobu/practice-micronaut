@@ -37,7 +37,7 @@ constructor(private val bookQueryService: BookQueryService) {
                             }
                         },
                         {
-                            HttpResponse.ok(BookResponse(it.id, it.bookName.value, it.publicationDate.value, it.bookName.value))
+                            HttpResponse.ok(BookResponse(it.id, it.bookName.value, it.publicationDate.value, it.authorName.value))
                         }
                 )
     }
