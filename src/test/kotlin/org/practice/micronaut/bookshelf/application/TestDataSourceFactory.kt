@@ -2,12 +2,14 @@ package org.practice.micronaut.bookshelf.application
 
 import com.ninja_squad.dbsetup_kotlin.DbSetupBuilder
 import nu.studer.sample.tables.Authors
+import nu.studer.sample.tables.BookNames
 import nu.studer.sample.tables.Books
 import nu.studer.sample.tables.records.AuthorsRecord
+import nu.studer.sample.tables.records.BookNamesRecord
 import nu.studer.sample.tables.records.BooksRecord
-import org.jooq.DSLContext
 import org.practice.micronaut.bookshelf.application.Ids.authorId
 import org.practice.micronaut.bookshelf.application.Ids.bookId
+import org.practice.micronaut.bookshelf.application.Ids.bookNameId
 import org.practice.micronaut.bookshelf.domain.lib.uuidToBytes
 import java.time.LocalDateTime
 import java.util.*
@@ -16,49 +18,34 @@ import java.util.*
 object Ids {
     const val authorId = "e4bb1e02-5599-49d5-8cba-488094cee25f"
     const val bookId = "26355bcd-0fc4-49bc-8606-b15461154181"
+    const val bookNameId = "175f9011-43ec-4a91-baf6-7c4ab09aae77"
 }
 
-fun String.toUUID(): UUID {
+internal fun String.toUUID(): UUID {
     return UUID.fromString(this)
 }
 
 fun DbSetupBuilder.deleteAll() {
     deleteAllFrom(
+            BookNames.BOOK_NAMES.name,
             Books.BOOKS.name,
             Authors.AUTHORS.name
     )
 }
 
-fun DSLContext.insertAuthors() {
-    insertInto(Authors.AUTHORS)
-            .columns(Authors.AUTHORS.ID, Authors.AUTHORS.AUTHOR_NAME)
-            .values(authorId.toUUID().uuidToBytes(), "エリック・エヴァンス").execute()
-}
-
-fun DSLContext.insertBooks() {
-    insertInto(Books.BOOKS)
-            .columns(
-                    Books.BOOKS.ID,
-                    Books.BOOKS.BOOK_NAME,
-                    Books.BOOKS.PUBLIHED_DATE,
-                    Books.BOOKS.AUTHOR_ID)
-            .values(
-                    bookId.toUUID().uuidToBytes(),
-                    "エリック・エヴァンスのドメイン駆動設計",
-                    LocalDateTime.of(1970, 12, 31, 23, 59),
-                    authorId.toUUID().uuidToBytes())
-            .execute()
+fun DbSetupBuilder.insertAllTest() {
+    insertAuthors()
+    insertBooks()
+    insertBookNames()
 }
 
 
 fun DbSetupBuilder.insertAuthors() {
     val authorsTable = Authors.AUTHORS
-    val id: ByteArray = Ids.authorId.toUUID().uuidToBytes()
-    val authorName: String = "エリック・エヴァンス"
-    insertInto("authors") {
+    val id: ByteArray = authorId.toUUID().uuidToBytes()
+    val authorName = "エリック・エヴァンス"
+    insertInto(authorsTable.name) {
         values(AuthorsRecord(id, authorName).intoMap())
-//        mappedValues(authorsTable.ID.name to Ids.authorId.toUUID().uuidToBytes())
-//        mappedValues("author_name" to "エリック・エヴァンス")
     }
 }
 
@@ -67,10 +54,22 @@ fun DbSetupBuilder.insertBooks() {
     insertInto(booksTable.name) {
         values(
                 BooksRecord(
-                        UUID.fromString(Ids.bookId).uuidToBytes(),
-                        "エリック・エヴァンスのドメイン駆動設計",
+                        UUID.fromString(bookId).uuidToBytes(),
                         LocalDateTime.of(1970, 12, 31, 23, 59),
-                        Ids.authorId.toUUID().uuidToBytes()
+                        authorId.toUUID().uuidToBytes()
+                ).intoMap()
+        )
+    }
+}
+
+fun DbSetupBuilder.insertBookNames() {
+    val bookNamesTable = BookNames.BOOK_NAMES
+    insertInto(bookNamesTable.name) {
+        values(
+                BookNamesRecord(
+                        UUID.fromString(bookNameId).uuidToBytes(),
+                        "エリック・エヴァンスのドメイン駆動設計",
+                        UUID.fromString(bookId).uuidToBytes()
                 ).intoMap()
         )
     }
