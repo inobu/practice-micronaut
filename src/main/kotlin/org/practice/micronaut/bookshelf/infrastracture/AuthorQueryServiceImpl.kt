@@ -29,7 +29,7 @@ class AuthorQueryServiceImpl @Inject constructor(private val dslContext: DSLCont
                                 bytesToUuid(author?.id).toString(),
                                 AuthorName(author?.authorName).bind()
                         )
-                    }.fix()
+                    }
                 }
     }
 }
