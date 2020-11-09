@@ -14,7 +14,7 @@ import org.practice.micronaut.bookshelf.util.tap
 import org.slf4j.LoggerFactory
 import javax.inject.Inject
 
-@Controller("/author")
+@Controller("/authors")
 class AuthorController @Inject constructor(
         private val authorQueryService: AuthorQueryService,
         private val authorCommandService: AuthorCommandService
