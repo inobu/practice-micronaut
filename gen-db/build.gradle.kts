@@ -1,6 +1,8 @@
 import nu.studer.gradle.jooq.JooqEdition
 import org.jooq.meta.jaxb.ForcedType
 import org.jooq.meta.jaxb.Property
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.flywaydb.gradle.task.FlywayMigrateTask
 
 
 plugins {
@@ -11,6 +13,8 @@ plugins {
 
 group = "org.practice.micronaut.bookshelf"
 version = "0.1"
+java.sourceCompatibility = JavaVersion.VERSION_11
+
 
 repositories {
     mavenCentral()
@@ -34,8 +38,10 @@ jooq {
     version.set("3.13.5")
     edition.set(JooqEdition.OSS)
 
+
     configurations {
         create("main") {
+
             jooqConfiguration.apply {
                 logging = org.jooq.meta.jaxb.Logging.WARN
                 jdbc.apply {
@@ -79,4 +85,16 @@ jooq {
             }
         }
     }
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xjsr305=strict")
+        jvmTarget = "11"
+        javaParameters = true
+    }
+}
+
+tasks.named("generateJooq") {
+    dependsOn(tasks.withType<FlywayMigrateTask>())
 }
