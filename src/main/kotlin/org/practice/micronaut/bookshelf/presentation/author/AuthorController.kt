@@ -61,4 +61,26 @@ class AuthorController @Inject constructor(
                 }
         )
     }
+
+    @Put(uri = "/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    fun put(@PathVariable("id") id: String?, @Body("authorName") authorName: String?): HttpResponse<*> {
+        return id.uuidValidator()
+                .tap(leftSideEffect = { logger.info("invalid id $id cause $it") })
+                .flatMap { authorCommandService.update(it, authorName) }
+                .fold(
+                        {
+                            when (it) {
+                                is GlobalError.DomainError, GlobalError.PresentationInvalidUUIDError -> HttpResponse.badRequest(ResponseBodyJson.fromHttpStatus(HttpStatus.BAD_REQUEST))
+                                is GlobalError.NotFoundError -> HttpResponse.notFound(ResponseBodyJson.fromHttpStatus(HttpStatus.NOT_FOUND))
+                                is GlobalError.DatabaseConflictsError -> HttpResponse.status<ResponseBodyJson>(HttpStatus.CONFLICT).body(ResponseBodyJson.fromHttpStatus(HttpStatus.CONFLICT))
+                                else -> HttpResponse.serverError()
+                            }
+                        },
+                        {
+                            HttpResponse.noContent()
+                        }
+                )
+    }
 }

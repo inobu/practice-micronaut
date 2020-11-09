@@ -22,6 +22,16 @@ data class Author private constructor(override val id: Id<Author>, val authorNam
                 GlobalError.DomainError
             }
         }
+
+        operator fun invoke(rawId: UUID, rawName: String?): Either<GlobalError, Author> {
+            return Option.fx {
+                val id = Id<Author>(rawId)
+                val authorName = AuthorName(rawName).bind()
+                Author(id, authorName)
+            }.fix().toEither {
+                GlobalError.DomainError
+            }
+        }
     }
 
     @TestOnly

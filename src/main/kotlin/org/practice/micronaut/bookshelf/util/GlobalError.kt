@@ -25,4 +25,8 @@ sealed class GlobalError {
     object NotFoundError : GlobalError() {
         override val value: String by lazy { " NotFoundError" }
     }
+
+    object SeriousSystemError: GlobalError() {
+        override val value: String by lazy { "SeriousSystemError" }
+    }
 }
