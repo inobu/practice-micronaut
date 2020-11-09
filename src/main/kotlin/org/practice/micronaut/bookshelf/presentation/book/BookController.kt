@@ -23,10 +23,10 @@ constructor(private val bookQueryService: BookQueryService) {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     fun getBook(@PathVariable("id") id: String?): HttpResponse<*> {
-
         return id.uuidValidator()
                 .tap(leftSideEffect = { logger.info("invalid id $id cause $it") })
                 .flatMap { bookQueryService.findBook(it).toEither { GlobalError.NotFoundError } }
+                .tap(leftSideEffect = { logger.info("notFoundResource $id cause $it") })
                 .fold(
                         {
                             when (it) {
