@@ -15,4 +15,6 @@ interface BookRepository {
     fun updatePrePublishedBook(bookUpdateCommand: BookUpdateCommand): Either<GlobalError, Unit>
 
     fun findById(entityId: EntityId<PrePublishedBook>): Either<GlobalError, PrePublishedBook>
+
+    fun deleteBook(entityId: EntityId<PrePublishedBook>): Either<GlobalError, Unit>
 }

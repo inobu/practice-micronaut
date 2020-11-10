@@ -122,4 +122,30 @@ class BookRepositoryImpl
                     }
                 }
     }
+
+    override fun deleteBook(entityId: EntityId<PrePublishedBook>): Either<GlobalError, Unit> {
+        return dslContext
+                .delete(Books.BOOKS)
+                .where(
+                        Books.BOOKS.ID.eq(
+                                entityId.value.toBytes())
+                ).runCatching { execute() }
+                .fold(
+                        onSuccess = {
+                            when (it == 0) {
+                                true -> GlobalError.NotFoundError.left()
+                                false -> {
+                                    {}().right()
+                                }
+                            }
+                        },
+                        onFailure = { throwable ->
+                            when (throwable) {
+                                is DataAccessException -> GlobalError.DatabaseConflictsError
+                                else -> GlobalError.SeriousSystemError
+                            }.left()
+                        }
+                )
+
+    }
 }
