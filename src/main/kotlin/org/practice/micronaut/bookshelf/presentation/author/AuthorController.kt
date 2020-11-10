@@ -7,8 +7,8 @@ import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.*
 import org.practice.micronaut.bookshelf.application.author.AuthorCommandService
 import org.practice.micronaut.bookshelf.application.author.AuthorQueryService
-import org.practice.micronaut.bookshelf.presentation.ResponseBodyJson
 import org.practice.micronaut.bookshelf.presentation.createErrorResponse
+import org.practice.micronaut.bookshelf.presentation.httpResponseCreator
 import org.practice.micronaut.bookshelf.presentation.uuidValidator
 import org.practice.micronaut.bookshelf.util.GlobalError
 import org.practice.micronaut.bookshelf.util.tap
@@ -50,7 +50,7 @@ class AuthorController @Inject constructor(
                     createErrorResponse<GlobalError>(it)
                 },
                 {
-                    HttpResponse.created(ResponseBodyJson.fromHttpStatus(HttpStatus.CREATED))
+                    httpResponseCreator(HttpStatus.CREATED)
                 }
         )
     }
@@ -67,7 +67,7 @@ class AuthorController @Inject constructor(
                             createErrorResponse<GlobalError>(it)
                         },
                         {
-                            HttpResponse.noContent<Nothing>()
+                            httpResponseCreator(HttpStatus.NO_CONTENT)
                         }
                 )
     }
@@ -86,7 +86,7 @@ class AuthorController @Inject constructor(
                             createErrorResponse<GlobalError>(it)
                         },
                         {
-                            HttpResponse.created(ResponseBodyJson.fromHttpStatus(HttpStatus.CREATED))
+                            httpResponseCreator(HttpStatus.CREATED)
                         }
                 )
     }

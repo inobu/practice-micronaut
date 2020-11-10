@@ -8,8 +8,8 @@ import io.micronaut.http.annotation.*
 import org.practice.micronaut.bookshelf.application.book.BookCommandService
 import org.practice.micronaut.bookshelf.application.book.BookQueryService
 import org.practice.micronaut.bookshelf.domain.repository.BookUpdateCommand
-import org.practice.micronaut.bookshelf.presentation.ResponseBodyJson
 import org.practice.micronaut.bookshelf.presentation.createErrorResponse
+import org.practice.micronaut.bookshelf.presentation.httpResponseCreator
 import org.practice.micronaut.bookshelf.presentation.localDateValidator
 import org.practice.micronaut.bookshelf.presentation.uuidValidator
 import org.practice.micronaut.bookshelf.util.GlobalError
@@ -58,7 +58,7 @@ constructor(private val bookQueryService: BookQueryService,
                             createErrorResponse<GlobalError>(it)
                         },
                         {
-                            HttpResponse.noContent()
+                            httpResponseCreator(HttpStatus.NO_CONTENT)
                         }
                 )
     }
@@ -74,7 +74,7 @@ constructor(private val bookQueryService: BookQueryService,
                             createErrorResponse<GlobalError>(it)
                         },
                         {
-                            HttpResponse.noContent()
+                            httpResponseCreator(HttpStatus.NO_CONTENT)
                         }
                 )
 
