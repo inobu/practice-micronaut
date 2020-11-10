@@ -33,7 +33,7 @@ class AuthorController @Inject constructor(
                 .tap(leftSideEffect = { logger.info("notFoundResource $id cause $it") })
                 .fold(
                         {
-                            createErrorResponse<GlobalError>(it)
+                            createErrorResponse(it)
                         },
                         {
                             HttpResponse.ok(AuthorResponse(it.id, it.authorName.value))
@@ -47,7 +47,7 @@ class AuthorController @Inject constructor(
     fun post(@Body("authorName") authorName: String?): HttpResponse<*> {
         return authorCommandService.commandAuthor(authorName).fold(
                 {
-                    createErrorResponse<GlobalError>(it)
+                    createErrorResponse(it)
                 },
                 {
                     httpResponseCreator(HttpStatus.CREATED)
@@ -64,7 +64,7 @@ class AuthorController @Inject constructor(
                 .flatMap { authorCommandService.updateAuthor(it, authorName) }
                 .fold(
                         {
-                            createErrorResponse<GlobalError>(it)
+                            createErrorResponse(it)
                         },
                         {
                             httpResponseCreator(HttpStatus.NO_CONTENT)
@@ -83,7 +83,7 @@ class AuthorController @Inject constructor(
                 .flatMap { authorCommandService.createPrePublishedBook(it, bookName, publicationDate) }
                 .fold(
                         {
-                            createErrorResponse<GlobalError>(it)
+                            createErrorResponse(it)
                         },
                         {
                             httpResponseCreator(HttpStatus.CREATED)

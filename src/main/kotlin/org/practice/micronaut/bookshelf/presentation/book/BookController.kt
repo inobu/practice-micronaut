@@ -36,7 +36,7 @@ constructor(private val bookQueryService: BookQueryService,
                 .tap(leftSideEffect = { logger.info("notFoundResource $id cause $it") })
                 .fold(
                         {
-                            createErrorResponse<GlobalError>(it)
+                            createErrorResponse(it)
                         },
                         {
                             HttpResponse.ok(BookResponse.fromDTO(it))
@@ -55,7 +55,7 @@ constructor(private val bookQueryService: BookQueryService,
                 .flatMap { bookCommandService.editBook(BookUpdateCommand(it.first, bookName, it.second)) }
                 .fold(
                         {
-                            createErrorResponse<GlobalError>(it)
+                            createErrorResponse(it)
                         },
                         {
                             httpResponseCreator(HttpStatus.NO_CONTENT)
@@ -71,7 +71,7 @@ constructor(private val bookQueryService: BookQueryService,
                 .flatMap { bookCommandService.deleteBook(it) }
                 .fold(
                         {
-                            createErrorResponse<GlobalError>(it)
+                            createErrorResponse(it)
                         },
                         {
                             httpResponseCreator(HttpStatus.NO_CONTENT)
