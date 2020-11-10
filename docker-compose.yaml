@@ -16,6 +16,23 @@ services:
       MYSQL_DATABASE: micronaut
       TZ: Asia/Tokyo
 
+  mirconaut-test-db:
+    image: mysql:8.0
+    ports:
+      - 33007:3306
+    restart: always
+    volumes:
+      - micronaut_test-data:/var/lib/mysql
+      - micronaut_test-log:/var/log/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_USER: micronaut
+      MYSQL_PASSWORD: micronaut
+      MYSQL_DATABASE: micronaut
+      TZ: Asia/Tokyo
+
 volumes:
   micronaut_data:
   micronaut_log:
+  micronaut_test-data:
+  micronaut_test-log:
