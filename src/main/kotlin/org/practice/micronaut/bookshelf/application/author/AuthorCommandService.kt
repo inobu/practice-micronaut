@@ -1,4 +1,4 @@
-package org.practice.micronaut.bookshelf.application
+package org.practice.micronaut.bookshelf.application.author
 
 import arrow.core.Either
 import arrow.core.flatMap

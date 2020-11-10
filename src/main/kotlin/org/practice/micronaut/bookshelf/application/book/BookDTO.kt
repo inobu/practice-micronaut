@@ -1,4 +1,4 @@
-package org.practice.micronaut.bookshelf.application
+package org.practice.micronaut.bookshelf.application.book
 
 import org.practice.micronaut.bookshelf.domain.type.AuthorName
 import org.practice.micronaut.bookshelf.domain.type.BookName

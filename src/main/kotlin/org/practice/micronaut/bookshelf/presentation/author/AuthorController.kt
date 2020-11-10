@@ -5,8 +5,8 @@ import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.*
-import org.practice.micronaut.bookshelf.application.AuthorCommandService
-import org.practice.micronaut.bookshelf.application.AuthorQueryService
+import org.practice.micronaut.bookshelf.application.author.AuthorCommandService
+import org.practice.micronaut.bookshelf.application.author.AuthorQueryService
 import org.practice.micronaut.bookshelf.presentation.ResponseBodyJson
 import org.practice.micronaut.bookshelf.presentation.uuidValidator
 import org.practice.micronaut.bookshelf.util.GlobalError

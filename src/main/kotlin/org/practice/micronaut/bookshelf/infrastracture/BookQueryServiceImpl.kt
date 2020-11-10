@@ -7,8 +7,8 @@ import nu.studer.sample.tables.Authors
 import nu.studer.sample.tables.BookNames
 import nu.studer.sample.tables.Books
 import org.jooq.DSLContext
-import org.practice.micronaut.bookshelf.application.BookDTO
-import org.practice.micronaut.bookshelf.application.BookQueryService
+import org.practice.micronaut.bookshelf.application.book.BookDTO
+import org.practice.micronaut.bookshelf.application.book.BookQueryService
 import org.practice.micronaut.bookshelf.domain.lib.toBytes
 import org.practice.micronaut.bookshelf.domain.lib.toUUID
 import org.practice.micronaut.bookshelf.domain.type.AuthorName

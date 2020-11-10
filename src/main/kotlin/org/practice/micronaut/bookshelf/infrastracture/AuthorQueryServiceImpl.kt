@@ -5,8 +5,8 @@ import arrow.core.Option
 import arrow.core.extensions.fx
 import nu.studer.sample.tables.Authors
 import org.jooq.DSLContext
-import org.practice.micronaut.bookshelf.application.AuthorDTO
-import org.practice.micronaut.bookshelf.application.AuthorQueryService
+import org.practice.micronaut.bookshelf.application.author.AuthorDTO
+import org.practice.micronaut.bookshelf.application.author.AuthorQueryService
 import org.practice.micronaut.bookshelf.domain.lib.toBytes
 import org.practice.micronaut.bookshelf.domain.lib.toUUID
 import org.practice.micronaut.bookshelf.domain.type.AuthorName

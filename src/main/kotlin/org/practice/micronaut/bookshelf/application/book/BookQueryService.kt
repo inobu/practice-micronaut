@@ -1,4 +1,4 @@
-package org.practice.micronaut.bookshelf.application
+package org.practice.micronaut.bookshelf.application.book
 
 import arrow.core.Option
 import java.util.*
