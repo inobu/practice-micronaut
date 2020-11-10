@@ -4,6 +4,9 @@ import com.ninja_squad.dbsetup_kotlin.dbSetup
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.practice.micronaut.bookshelf.*
+import org.practice.micronaut.bookshelf.application.author.AuthorQueryService
+import org.practice.micronaut.bookshelf.toUUID
 import java.util.*
 import javax.inject.Inject
 import javax.sql.DataSource

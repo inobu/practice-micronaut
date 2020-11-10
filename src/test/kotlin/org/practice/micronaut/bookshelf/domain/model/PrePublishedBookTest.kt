@@ -15,7 +15,7 @@ class PrePublishedBookTest {
 
     @Test
     fun validPrePublishedBookTest() {
-        assert(PrePublishedBook(validBookName, beforeDate, currentDate).isRight())
+        assert(PrePublishedBook(validBookName, afterDate, currentDate).isRight())
     }
 
     /**
@@ -23,11 +23,11 @@ class PrePublishedBookTest {
      */
     @Test
     fun validPrePublishedBookInSpiteOfInvalidNameTest() {
-        assert(PrePublishedBook(invalidLengthName, beforeDate, currentDate).isRight())
+        assert(PrePublishedBook(invalidLengthName, afterDate, currentDate).isRight())
     }
 
     @Test
     fun invalidPrePublishedBookTest() {
-        assert(PrePublishedBook(validBookName, afterDate, currentDate).isLeft())
+        assert(PrePublishedBook(validBookName, beforeDate, currentDate).isLeft())
     }
 }

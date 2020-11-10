@@ -4,8 +4,10 @@ import com.ninja_squad.dbsetup_kotlin.dbSetup
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.practice.micronaut.bookshelf.application.deleteAll
 import org.practice.micronaut.bookshelf.application.author.AuthorQueryService
+import org.practice.micronaut.bookshelf.deleteAll
+import org.practice.micronaut.bookshelf.insertAuthors
+import org.practice.micronaut.bookshelf.insertBooks
 import org.practice.micronaut.bookshelf.domain.model.author.Author
 import java.util.*
 import javax.inject.Inject
@@ -27,6 +29,8 @@ class AuthorRepositoryTest {
     fun init() {
         dbSetup(to = dataSource) {
             deleteAll()
+            insertAuthors()
+            insertBooks()
         }.launch()
     }
 
