@@ -8,6 +8,7 @@ import org.practice.micronaut.bookshelf.domain.repository.BookRepository
 import org.practice.micronaut.bookshelf.domain.repository.BookUpdateCommand
 import org.practice.micronaut.bookshelf.util.GlobalError
 import java.time.LocalDate
+import java.util.*
 
 import javax.inject.Singleton
 
@@ -17,5 +18,10 @@ class BookCommandService(private val bookRepository: BookRepository) {
         return bookRepository.findById(EntityId(bookUpdateCommand.id))
                 .flatMap { PrePublishedBook(bookUpdateCommand.id, bookUpdateCommand.bookName, bookUpdateCommand.publicationDate, LocalDate.now()) }
                 .flatMap { bookRepository.updatePrePublishedBook(bookUpdateCommand) }
+    }
+
+    fun deleteBook(id: UUID): Either<GlobalError, Unit> {
+        return bookRepository.findById(EntityId(id))
+                .flatMap { bookRepository.deleteBook(it.id) }
     }
 }
