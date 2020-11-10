@@ -32,5 +32,16 @@ data class PrePublishedBook private constructor(
                 GlobalError.DomainError
             }
         }
+
+        operator fun invoke(rawId: UUID, rawBookName: String?, rawPublicationDate: LocalDate?, currentDate: LocalDate): Either<GlobalError, PrePublishedBook> {
+            return Option.fx {
+                val id = Id<PrePublishedBook>(rawId)
+                val bookName = BookName(rawBookName)
+                val publicationDate = PublicationDate(rawPublicationDate, currentDate).bind()
+                PrePublishedBook(id, bookName, publicationDate)
+            }.fix().toEither {
+                GlobalError.DomainError
+            }
+        }
     }
 }
