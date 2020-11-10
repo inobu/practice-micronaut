@@ -39,7 +39,7 @@ constructor(private val bookQueryService: BookQueryService,
                             createErrorResponse<GlobalError>(it)
                         },
                         {
-                            HttpResponse.ok(BookResponse(it.id, it.bookName.value, it.publicationDate.value, it.authorName.value))
+                            HttpResponse.ok(BookResponse.fromDTO(it))
                         }
                 )
     }
