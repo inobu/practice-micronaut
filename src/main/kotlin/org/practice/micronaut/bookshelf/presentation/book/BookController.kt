@@ -9,6 +9,7 @@ import org.practice.micronaut.bookshelf.application.book.BookCommandService
 import org.practice.micronaut.bookshelf.application.book.BookQueryService
 import org.practice.micronaut.bookshelf.domain.repository.BookUpdateCommand
 import org.practice.micronaut.bookshelf.presentation.ResponseBodyJson
+import org.practice.micronaut.bookshelf.presentation.createErrorResponse
 import org.practice.micronaut.bookshelf.presentation.localDateValidator
 import org.practice.micronaut.bookshelf.presentation.uuidValidator
 import org.practice.micronaut.bookshelf.util.GlobalError
@@ -35,12 +36,7 @@ constructor(private val bookQueryService: BookQueryService,
                 .tap(leftSideEffect = { logger.info("notFoundResource $id cause $it") })
                 .fold(
                         {
-                            when (it) {
-                                is GlobalError.DomainError, GlobalError.PresentationInvalidUUIDError -> HttpResponse.badRequest(ResponseBodyJson.fromHttpStatus(HttpStatus.BAD_REQUEST))
-                                is GlobalError.NotFoundError -> HttpResponse.notFound(ResponseBodyJson.fromHttpStatus(HttpStatus.BAD_REQUEST))
-                                is GlobalError.DatabaseConflictsError -> HttpResponse.status<ResponseBodyJson>(HttpStatus.CONFLICT).body(ResponseBodyJson.fromHttpStatus(HttpStatus.CONFLICT))
-                                else -> HttpResponse.serverError()
-                            }
+                            createErrorResponse<GlobalError>(it)
                         },
                         {
                             HttpResponse.ok(BookResponse(it.id, it.bookName.value, it.publicationDate.value, it.authorName.value))
@@ -59,12 +55,7 @@ constructor(private val bookQueryService: BookQueryService,
                 .flatMap { bookCommandService.editBook(BookUpdateCommand(it.first, bookName, it.second)) }
                 .fold(
                         {
-                            when (it) {
-                                is GlobalError.DomainError, GlobalError.PresentationInvalidUUIDError, GlobalError.PresentationNullError -> HttpResponse.badRequest(ResponseBodyJson.fromHttpStatus(HttpStatus.BAD_REQUEST))
-                                is GlobalError.NotFoundError -> HttpResponse.notFound(ResponseBodyJson.fromHttpStatus(HttpStatus.BAD_REQUEST))
-                                is GlobalError.DatabaseConflictsError -> HttpResponse.status<ResponseBodyJson>(HttpStatus.CONFLICT).body(ResponseBodyJson.fromHttpStatus(HttpStatus.CONFLICT))
-                                else -> HttpResponse.serverError()
-                            }
+                            createErrorResponse<GlobalError>(it)
                         },
                         {
                             HttpResponse.noContent()
@@ -80,12 +71,7 @@ constructor(private val bookQueryService: BookQueryService,
                 .flatMap { bookCommandService.deleteBook(it) }
                 .fold(
                         {
-                            when (it) {
-                                is GlobalError.DomainError, GlobalError.PresentationInvalidUUIDError, GlobalError.PresentationNullError -> HttpResponse.badRequest(ResponseBodyJson.fromHttpStatus(HttpStatus.BAD_REQUEST))
-                                is GlobalError.NotFoundError -> HttpResponse.notFound(ResponseBodyJson.fromHttpStatus(HttpStatus.BAD_REQUEST))
-                                is GlobalError.DatabaseConflictsError -> HttpResponse.status<ResponseBodyJson>(HttpStatus.CONFLICT).body(ResponseBodyJson.fromHttpStatus(HttpStatus.CONFLICT))
-                                else -> HttpResponse.serverError()
-                            }
+                            createErrorResponse<GlobalError>(it)
                         },
                         {
                             HttpResponse.noContent()

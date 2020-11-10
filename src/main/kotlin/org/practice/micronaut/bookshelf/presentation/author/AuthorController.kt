@@ -8,6 +8,7 @@ import io.micronaut.http.annotation.*
 import org.practice.micronaut.bookshelf.application.author.AuthorCommandService
 import org.practice.micronaut.bookshelf.application.author.AuthorQueryService
 import org.practice.micronaut.bookshelf.presentation.ResponseBodyJson
+import org.practice.micronaut.bookshelf.presentation.createErrorResponse
 import org.practice.micronaut.bookshelf.presentation.uuidValidator
 import org.practice.micronaut.bookshelf.util.GlobalError
 import org.practice.micronaut.bookshelf.util.tap
@@ -32,12 +33,7 @@ class AuthorController @Inject constructor(
                 .tap(leftSideEffect = { logger.info("notFoundResource $id cause $it") })
                 .fold(
                         {
-                            when (it) {
-                                is GlobalError.DomainError, GlobalError.PresentationInvalidUUIDError -> HttpResponse.badRequest(ResponseBodyJson.fromHttpStatus(HttpStatus.BAD_REQUEST))
-                                is GlobalError.NotFoundError -> HttpResponse.notFound(ResponseBodyJson.fromHttpStatus(HttpStatus.BAD_REQUEST))
-                                is GlobalError.DatabaseConflictsError -> HttpResponse.status<ResponseBodyJson>(HttpStatus.CONFLICT).body(ResponseBodyJson.fromHttpStatus(HttpStatus.CONFLICT))
-                                else -> HttpResponse.serverError()
-                            }
+                            createErrorResponse<GlobalError>(it)
                         },
                         {
                             HttpResponse.ok(AuthorResponse(it.id, it.authorName.value))
@@ -51,11 +47,7 @@ class AuthorController @Inject constructor(
     fun post(@Body("authorName") authorName: String?): HttpResponse<*> {
         return authorCommandService.commandAuthor(authorName).fold(
                 {
-                    when (it) {
-                        is GlobalError.DomainError -> HttpResponse.badRequest(ResponseBodyJson.fromHttpStatus(HttpStatus.BAD_REQUEST))
-                        is GlobalError.DatabaseConflictsError -> HttpResponse.status<ResponseBodyJson>(HttpStatus.CONFLICT).body(ResponseBodyJson.fromHttpStatus(HttpStatus.CONFLICT))
-                        else -> HttpResponse.serverError()
-                    }
+                    createErrorResponse<GlobalError>(it)
                 },
                 {
                     HttpResponse.created(ResponseBodyJson.fromHttpStatus(HttpStatus.CREATED))
@@ -72,15 +64,10 @@ class AuthorController @Inject constructor(
                 .flatMap { authorCommandService.updateAuthor(it, authorName) }
                 .fold(
                         {
-                            when (it) {
-                                is GlobalError.DomainError, GlobalError.PresentationInvalidUUIDError -> HttpResponse.badRequest(ResponseBodyJson.fromHttpStatus(HttpStatus.BAD_REQUEST))
-                                is GlobalError.NotFoundError -> HttpResponse.notFound(ResponseBodyJson.fromHttpStatus(HttpStatus.NOT_FOUND))
-                                is GlobalError.DatabaseConflictsError -> HttpResponse.status<ResponseBodyJson>(HttpStatus.CONFLICT).body(ResponseBodyJson.fromHttpStatus(HttpStatus.CONFLICT))
-                                else -> HttpResponse.serverError()
-                            }
+                            createErrorResponse<GlobalError>(it)
                         },
                         {
-                            HttpResponse.noContent()
+                            HttpResponse.noContent<Nothing>()
                         }
                 )
     }
@@ -96,12 +83,7 @@ class AuthorController @Inject constructor(
                 .flatMap { authorCommandService.createPrePublishedBook(it, bookName, publicationDate) }
                 .fold(
                         {
-                            when (it) {
-                                is GlobalError.DomainError, GlobalError.PresentationInvalidUUIDError -> HttpResponse.badRequest(ResponseBodyJson.fromHttpStatus(HttpStatus.BAD_REQUEST))
-                                is GlobalError.NotFoundError -> HttpResponse.notFound(ResponseBodyJson.fromHttpStatus(HttpStatus.NOT_FOUND))
-                                is GlobalError.DatabaseConflictsError -> HttpResponse.status<ResponseBodyJson>(HttpStatus.CONFLICT).body(ResponseBodyJson.fromHttpStatus(HttpStatus.CONFLICT))
-                                else -> HttpResponse.serverError()
-                            }
+                            createErrorResponse<GlobalError>(it)
                         },
                         {
                             HttpResponse.created(ResponseBodyJson.fromHttpStatus(HttpStatus.CREATED))
