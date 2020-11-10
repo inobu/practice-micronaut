@@ -71,4 +71,26 @@ constructor(private val bookQueryService: BookQueryService,
                         }
                 )
     }
+
+    @Delete(uri = "/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    fun deleteBook(@PathVariable("id") id: String?): HttpResponse<*> {
+        return id.uuidValidator()
+                .flatMap { bookCommandService.deleteBook(it) }
+                .fold(
+                        {
+                            when (it) {
+                                is GlobalError.DomainError, GlobalError.PresentationInvalidUUIDError, GlobalError.PresentationNullError -> HttpResponse.badRequest(ResponseBodyJson.fromHttpStatus(HttpStatus.BAD_REQUEST))
+                                is GlobalError.NotFoundError -> HttpResponse.notFound(ResponseBodyJson.fromHttpStatus(HttpStatus.BAD_REQUEST))
+                                is GlobalError.DatabaseConflictsError -> HttpResponse.status<ResponseBodyJson>(HttpStatus.CONFLICT).body(ResponseBodyJson.fromHttpStatus(HttpStatus.CONFLICT))
+                                else -> HttpResponse.serverError()
+                            }
+                        },
+                        {
+                            HttpResponse.noContent()
+                        }
+                )
+
+    }
 }
