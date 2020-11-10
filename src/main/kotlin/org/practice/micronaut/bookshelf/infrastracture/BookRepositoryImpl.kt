@@ -12,8 +12,8 @@ import org.practice.micronaut.bookshelf.domain.model.EntityId
 import org.practice.micronaut.bookshelf.domain.model.author.Author
 import org.practice.micronaut.bookshelf.domain.model.book.PrePublishedBook
 import org.practice.micronaut.bookshelf.domain.model.book.PublishedBook
+import org.practice.micronaut.bookshelf.domain.repository.BookChangeCommand
 import org.practice.micronaut.bookshelf.domain.repository.BookRepository
-import org.practice.micronaut.bookshelf.domain.repository.BookUpdateCommand
 import org.practice.micronaut.bookshelf.util.GlobalError
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -76,17 +76,17 @@ class BookRepositoryImpl
         )
     }
 
-    override fun updatePrePublishedBook(bookUpdateCommand: BookUpdateCommand): Either<GlobalError, Unit> {
+    override fun updatePrePublishedBook(bookChangeCommand: BookChangeCommand): Either<GlobalError, Unit> {
         return runCatching {
             dslContext.transaction { c ->
                 c.dsl().update(Books.BOOKS)
-                        .set(Books.BOOKS.PUBLICATION_DATE, LocalDateTime.of(bookUpdateCommand.publicationDate, LocalTime.MAX))
-                        .where(Books.BOOKS.ID.eq(bookUpdateCommand.id.toBytes()))
+                        .set(Books.BOOKS.PUBLICATION_DATE, LocalDateTime.of(bookChangeCommand.publicationDate, LocalTime.MAX))
+                        .where(Books.BOOKS.ID.eq(bookChangeCommand.id.toBytes()))
                         .execute()
-                bookUpdateCommand.bookName?.run {
+                bookChangeCommand.bookName?.run {
                     c.dsl().update(BookNames.BOOK_NAMES)
                             .set(BookNames.BOOK_NAMES.BOOK_NAME, this)
-                            .where(BookNames.BOOK_NAMES.BOOKS_ID.eq(bookUpdateCommand.id.toBytes()))
+                            .where(BookNames.BOOK_NAMES.BOOKS_ID.eq(bookChangeCommand.id.toBytes()))
                             .execute()
                 }
             }
@@ -146,6 +146,5 @@ class BookRepositoryImpl
                             }.left()
                         }
                 )
-
     }
 }

@@ -12,7 +12,7 @@ interface BookRepository {
 
     fun savePrePublishedBook(prePublishedBook: PrePublishedBook, entityId: EntityId<Author>): Either<GlobalError, Unit>
 
-    fun updatePrePublishedBook(bookUpdateCommand: BookUpdateCommand): Either<GlobalError, Unit>
+    fun updatePrePublishedBook(bookChangeCommand: BookChangeCommand): Either<GlobalError, Unit>
 
     fun findById(entityId: EntityId<PrePublishedBook>): Either<GlobalError, PrePublishedBook>
 

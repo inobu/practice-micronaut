@@ -4,7 +4,6 @@ import arrow.core.Either
 import arrow.core.Option
 import arrow.core.extensions.fx
 import arrow.core.fix
-import org.jetbrains.annotations.TestOnly
 import org.practice.micronaut.bookshelf.domain.model.Entity
 import org.practice.micronaut.bookshelf.domain.model.Id
 import org.practice.micronaut.bookshelf.domain.type.BookName
@@ -23,11 +22,11 @@ data class PublishedBook private constructor(
         val publicationDate: PublicationDate,
 ) : Entity<PublishedBook> {
     companion object {
-        operator fun invoke(rawBookName: String, rawPublicationDate: LocalDate, currentDate: LocalDate): Either<GlobalError, PublishedBook> {
+        operator fun invoke(rawBookName: String, rawPublicationDate: LocalDate, compareDate: LocalDate): Either<GlobalError, PublishedBook> {
             return Option.fx {
                 val id = Id<PublishedBook>(UUID.randomUUID())
                 val bookName = BookName(rawBookName).bind()
-                val publicationDate = PublicationDate(rawPublicationDate, currentDate).bind()
+                val publicationDate = PublicationDate(rawPublicationDate, compareDate).bind()
                 PublishedBook(id, bookName, publicationDate)
             }.fix().toEither {
                 GlobalError.DomainError

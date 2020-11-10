@@ -6,12 +6,12 @@ import java.time.LocalDate
 
 data class PublicationDate private constructor(override val value: LocalDate) : Value<LocalDate> {
     companion object {
-        operator fun invoke(value: LocalDate?, currentDate: LocalDate): Option<PublicationDate> {
-            return value.toOption().filter { validPublicationDate(it, currentDate) }.map { PublicationDate(it) }
+        operator fun invoke(value: LocalDate?, compareDate: LocalDate): Option<PublicationDate> {
+            return value.toOption().filter { validPublicationDate(it, compareDate) }.map { PublicationDate(it) }
         }
 
-        private fun validPublicationDate(value: LocalDate, currentDate: LocalDate): Boolean {
-            return value.isBefore(currentDate)
+        private fun validPublicationDate(value: LocalDate, compareDate: LocalDate): Boolean {
+            return value.isBefore(compareDate)
         }
     }
 }
