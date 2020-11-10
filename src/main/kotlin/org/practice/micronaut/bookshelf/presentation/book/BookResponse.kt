@@ -10,7 +10,7 @@ data class BookResponse(val id: String, val bookName: String?, val publicationDa
                 BookResponse(
                         id,
                         bookName.value,
-                        publicationDate.value.format(DateTimeFormatter.ISO_DATE),
+                        publicationDate.format(DateTimeFormatter.ISO_DATE),
                         authorName.value
                 )
             }

@@ -13,8 +13,6 @@ import org.practice.micronaut.bookshelf.domain.lib.toBytes
 import org.practice.micronaut.bookshelf.domain.lib.toUUID
 import org.practice.micronaut.bookshelf.domain.type.AuthorName
 import org.practice.micronaut.bookshelf.domain.type.BookName
-import org.practice.micronaut.bookshelf.domain.type.PublicationDate
-import java.time.LocalDate
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -41,10 +39,7 @@ class BookQueryServiceImpl
                         BookDTO(
                                 bookId.toUUID().toString(),
                                 BookName(bookName).bind(),
-                                PublicationDate(
-                                        date?.toLocalDate(),
-                                        LocalDate.now()
-                                ).bind(),
+                                date.toLocalDate(),
                                 AuthorName(authorName).bind()
                         )
                     }
