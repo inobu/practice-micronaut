@@ -45,6 +45,7 @@ dependencies {
     testImplementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
 
     runtimeOnly("ch.qos.logback:logback-classic:1.2.3")
+    runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     implementation("javax.annotation:javax.annotation-api")
 

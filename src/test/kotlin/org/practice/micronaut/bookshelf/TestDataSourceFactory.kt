@@ -1,4 +1,4 @@
-package org.practice.micronaut.bookshelf.application
+package org.practice.micronaut.bookshelf
 
 import com.ninja_squad.dbsetup_kotlin.DbSetupBuilder
 import nu.studer.sample.tables.Authors
@@ -7,10 +7,10 @@ import nu.studer.sample.tables.Books
 import nu.studer.sample.tables.records.AuthorsRecord
 import nu.studer.sample.tables.records.BookNamesRecord
 import nu.studer.sample.tables.records.BooksRecord
-import org.practice.micronaut.bookshelf.application.Ids.authorId
-import org.practice.micronaut.bookshelf.application.Ids.bookId
-import org.practice.micronaut.bookshelf.application.Ids.bookNameId
-import org.practice.micronaut.bookshelf.domain.lib.uuidToBytes
+import org.practice.micronaut.bookshelf.Ids.authorId
+import org.practice.micronaut.bookshelf.Ids.bookId
+import org.practice.micronaut.bookshelf.Ids.bookNameId
+import org.practice.micronaut.bookshelf.domain.lib.toBytes
 import java.time.LocalDateTime
 import java.util.*
 
@@ -42,7 +42,7 @@ fun DbSetupBuilder.insertAllTest() {
 
 fun DbSetupBuilder.insertAuthors() {
     val authorsTable = Authors.AUTHORS
-    val id: ByteArray = authorId.toUUID().uuidToBytes()
+    val id: ByteArray = authorId.toUUID().toBytes()
     val authorName = "エリック・エヴァンス"
     insertInto(authorsTable.name) {
         values(AuthorsRecord(id, authorName).intoMap())
@@ -54,9 +54,9 @@ fun DbSetupBuilder.insertBooks() {
     insertInto(booksTable.name) {
         values(
                 BooksRecord(
-                        UUID.fromString(bookId).uuidToBytes(),
+                        UUID.fromString(bookId).toBytes(),
                         LocalDateTime.of(1970, 12, 31, 23, 59),
-                        authorId.toUUID().uuidToBytes()
+                        authorId.toUUID().toBytes()
                 ).intoMap()
         )
     }
@@ -67,9 +67,9 @@ fun DbSetupBuilder.insertBookNames() {
     insertInto(bookNamesTable.name) {
         values(
                 BookNamesRecord(
-                        UUID.fromString(bookNameId).uuidToBytes(),
+                        UUID.fromString(bookNameId).toBytes(),
                         "エリック・エヴァンスのドメイン駆動設計",
-                        UUID.fromString(bookId).uuidToBytes()
+                        UUID.fromString(bookId).toBytes()
                 ).intoMap()
         )
     }

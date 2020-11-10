@@ -1,14 +1,14 @@
 package org.practice.micronaut.bookshelf.infrastracture
 
+import arrow.core.None
 import arrow.core.Option
 import arrow.core.extensions.fx
-import arrow.core.fix
 import nu.studer.sample.tables.Authors
 import org.jooq.DSLContext
 import org.practice.micronaut.bookshelf.application.AuthorDTO
 import org.practice.micronaut.bookshelf.application.AuthorQueryService
-import org.practice.micronaut.bookshelf.domain.lib.bytesToUuid
-import org.practice.micronaut.bookshelf.domain.lib.uuidToBytes
+import org.practice.micronaut.bookshelf.domain.lib.toBytes
+import org.practice.micronaut.bookshelf.domain.lib.toUUID
 import org.practice.micronaut.bookshelf.domain.type.AuthorName
 import java.util.*
 import javax.inject.Inject
@@ -20,16 +20,16 @@ class AuthorQueryServiceImpl @Inject constructor(private val dslContext: DSLCont
         return dslContext
                 .select()
                 .from(Authors.AUTHORS)
-                .where(Authors.AUTHORS.ID.eq(id.uuidToBytes()))
+                .where(Authors.AUTHORS.ID.eq(id.toBytes()))
                 .fetchOneInto(nu.studer.sample.tables.pojos.Authors::class.java)
-                .run {
+                ?.run {
                     val author = this
                     Option.fx {
                         AuthorDTO(
-                                bytesToUuid(author?.id).toString(),
-                                AuthorName(author?.authorName).bind()
+                                author.id.toUUID().toString(),
+                                AuthorName(author.authorName).bind()
                         )
                     }
-                }
+                } ?: None
     }
 }

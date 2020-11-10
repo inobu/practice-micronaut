@@ -22,7 +22,7 @@ data class PrePublishedBook private constructor(
         val publicationDate: PublicationDate
 ) : Entity<PrePublishedBook> {
     companion object {
-        operator fun invoke(rawBookName: String, rawPublicationDate: LocalDate, currentDate: LocalDate): Either<GlobalError, PrePublishedBook> {
+        operator fun invoke(rawBookName: String?, rawPublicationDate: LocalDate?, currentDate: LocalDate): Either<GlobalError, PrePublishedBook> {
             return Option.fx {
                 val id = Id<PrePublishedBook>(UUID.randomUUID())
                 val bookName = BookName(rawBookName)
