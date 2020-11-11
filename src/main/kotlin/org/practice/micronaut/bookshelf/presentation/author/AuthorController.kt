@@ -11,8 +11,8 @@ import org.practice.micronaut.bookshelf.presentation.createErrorResponse
 import org.practice.micronaut.bookshelf.presentation.httpResponseCreator
 import org.practice.micronaut.bookshelf.presentation.uuidValidator
 import org.practice.micronaut.bookshelf.util.GlobalError
+import org.practice.micronaut.bookshelf.util.anyLoggerFactory
 import org.practice.micronaut.bookshelf.util.tap
-import org.slf4j.LoggerFactory
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -21,7 +21,7 @@ class AuthorController @Inject constructor(
         private val authorQueryService: AuthorQueryService,
         private val authorCommandService: AuthorCommandService
 ) {
-    private val logger = LoggerFactory.getLogger(AuthorController::class.java)
+    private val logger by lazy { anyLoggerFactory<AuthorController>() }
 
     @Get(uri = "/{id}")
     @Consumes(MediaType.APPLICATION_JSON)

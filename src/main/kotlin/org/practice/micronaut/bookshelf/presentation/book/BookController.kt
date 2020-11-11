@@ -13,8 +13,8 @@ import org.practice.micronaut.bookshelf.presentation.httpResponseCreator
 import org.practice.micronaut.bookshelf.presentation.localDateValidator
 import org.practice.micronaut.bookshelf.presentation.uuidValidator
 import org.practice.micronaut.bookshelf.util.GlobalError
+import org.practice.micronaut.bookshelf.util.anyLoggerFactory
 import org.practice.micronaut.bookshelf.util.tap
-import org.slf4j.LoggerFactory
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -24,7 +24,7 @@ class BookController @Inject
 constructor(private val bookQueryService: BookQueryService,
             private val bookCommandService: BookCommandService
 ) {
-    private val logger = LoggerFactory.getLogger(BookController::class.java)
+    private val logger by lazy { anyLoggerFactory<BookController>() }
 
     @Get(uri = "/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
