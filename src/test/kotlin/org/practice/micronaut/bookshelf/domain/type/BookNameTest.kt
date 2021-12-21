@@ -8,18 +8,18 @@ import org.practice.micronaut.bookshelf.domain.TestDataFactory.validBookName
 
 @MicronautTest
 class BookNameTest {
-    @Test
-    fun bookNameInvalidMaxLengthTest() {
-        assert(BookName(invalidLengthName) == None)
-    }
+  @Test
+  fun bookNameInvalidMaxLengthTest() {
+    assert(BookName(invalidLengthName) == None)
+  }
 
-    @Test
-    fun bookNameInvalidMinLengthTest() {
-        assert(BookName("") == None)
-    }
+  @Test
+  fun bookNameInvalidMinLengthTest() {
+    assert(BookName("") == None)
+  }
 
-    @Test
-    fun bookNameValidTest() {
-        assert(BookName(validBookName).nonEmpty())
-    }
+  @Test
+  fun bookNameValidTest() {
+    assert(BookName(validBookName).nonEmpty())
+  }
 }

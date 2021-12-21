@@ -10,13 +10,13 @@ import org.practice.micronaut.bookshelf.domain.TestDataFactory.currentDate
 @MicronautTest
 class PublicationDateTest {
 
-    @Test
-    fun invalidPublicationDateTest() {
-        assert(PublicationDate(afterDate, currentDate) == None)
-    }
+  @Test
+  fun invalidPublicationDateTest() {
+    assert(PublicationDate(afterDate, currentDate) == None)
+  }
 
-    @Test
-    fun validPublicationDateTest() {
-        assert(PublicationDate(beforeDate, currentDate).nonEmpty())
-    }
+  @Test
+  fun validPublicationDateTest() {
+    assert(PublicationDate(beforeDate, currentDate).nonEmpty())
+  }
 }
