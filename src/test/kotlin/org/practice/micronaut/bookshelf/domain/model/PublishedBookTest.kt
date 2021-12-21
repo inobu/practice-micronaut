@@ -11,13 +11,13 @@ import org.practice.micronaut.bookshelf.domain.model.book.PublishedBook
 @MicronautTest
 class PublishedBookTest {
 
-    @Test
-    fun validPublishedBookTest() {
-        assert(PublishedBook(validBookName, beforeDate, currentDate).isRight())
-    }
+  @Test
+  fun validPublishedBookTest() {
+    assert(PublishedBook(validBookName, beforeDate, currentDate).isRight())
+  }
 
-    @Test
-    fun invalidPublishedBookBecauseInvalidNameTest() {
-        assert(PublishedBook(invalidLengthName, beforeDate, currentDate).isLeft())
-    }
+  @Test
+  fun invalidPublishedBookBecauseInvalidNameTest() {
+    assert(PublishedBook(invalidLengthName, beforeDate, currentDate).isLeft())
+  }
 }

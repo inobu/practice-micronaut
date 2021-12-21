@@ -4,5 +4,5 @@ import arrow.core.Option
 import java.util.*
 
 interface BookQueryService {
-    fun findBook(id: UUID): Option<BookDTO>
+  fun findBook(id: UUID): Option<BookDTO>
 }
