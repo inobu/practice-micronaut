@@ -8,6 +8,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "6.0.0"
 //    id("org.jlleitschuh.gradle.ktlint") version "8.0.0"
     id("io.micronaut.application") version "1.0.3"
+    id("format-and-lint")
 }
 
 version = "0.1"
